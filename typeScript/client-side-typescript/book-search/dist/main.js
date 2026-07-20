@@ -1,6 +1,8 @@
 "use strict";
 const formElement = document.getElementById("search-form");
 const listElement = document.getElementById("book-list");
+const helloButton = document.getElementById("helloBtn");
+const helloMessage = document.getElementById("output");
 async function findBooks(query) {
     const response = await fetch(`https://www.dbooks.org/api/search/${query}`);
     3;
@@ -28,4 +30,7 @@ function getBookCard(data) {
     `;
     return article;
 }
+helloButton.addEventListener("click", (event) => {
+    helloMessage.innerText = "Hello from TypeScript!";
+});
 //# sourceMappingURL=main.js.map
