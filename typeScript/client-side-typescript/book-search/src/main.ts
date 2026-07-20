@@ -69,9 +69,9 @@ submitButton.addEventListener("click", (event: MouseEvent) => {
 });
 
 toggleButton.addEventListener("click", (event: MouseEvent) => {
-  if (hiddenText.style.visibility === "visible") {
-    hiddenText.style.visibility = "hidden";
+  if (hiddenText.style.display == "") {
+    hiddenText.style.display = "none";
   } else {
-    hiddenText.style.visibility = "visible";
+    hiddenText.style.display = "";
   }
 });

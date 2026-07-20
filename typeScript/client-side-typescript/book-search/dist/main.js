@@ -42,11 +42,11 @@ submitButton.addEventListener("click", (event) => {
     nameParagraph.innerText = nameInput.value;
 });
 toggleButton.addEventListener("click", (event) => {
-    if (hiddenText.style.visibility === "visible") {
-        hiddenText.style.visibility = "hidden";
+    if (hiddenText.style.display == "") {
+        hiddenText.style.display = "none";
     }
     else {
-        hiddenText.style.visibility = "visible";
+        hiddenText.style.display = "";
     }
 });
 //# sourceMappingURL=main.js.map
