@@ -15,18 +15,36 @@ interface Book {
   image: string;
   url: string;
 }
-async function fetchBooks(query: string): Promise<Book[]> {
-  const response = await fetch(`https://www.dbooks.org/api/search/${query}`);
-  const data = (await response.json()) as SearchResult;
 
-  return data.books;
+async function findBooks(query: string): Promise<Book[]> {
+  const response = await fetch(`https://www.dbooks.org/api/search/${query}`);
+  3;
+  const data = await response.json();
+  return data.books as Book[];
 }
 
-formElement.addEventListener("submit", (event: Event) => {
+formElement.addEventListener("submit", async (event) => {
   event.preventDefault();
   const formData = Object.fromEntries(new FormData(formElement));
   const query = formData.query as string;
-  const books = await fetchBooks(query);
+  const books = await findBooks(query);
+  books.forEach((book) => {
+    const card = getBookCard(book);
+    const li = document.createElement("li");
 
-  console.log(books);
+    li.append(card);
+    listElement.append(li);
+  });
 });
+
+function getBookCard(data: Book): HTMLElement {
+  const article = document.createElement("article");
+
+  article.innerHTML = `
+    <h1>${data.title}</h1>
+    <h2>${data.subtitle}</h2>
+    <p>${data.authors}</p>
+    `;
+
+  return article;
+}
