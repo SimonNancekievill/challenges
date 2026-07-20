@@ -1,6 +1,4 @@
-import type { Recipe } from "./types";
-
-const recipe1: Recipe = {
+const recipe1 = {
   name: "Apple Pie",
   servings: 4,
   vegeterian: true,
@@ -10,8 +8,7 @@ const recipe1: Recipe = {
     { name: "oatmilk", amountGrams: 150 },
   ],
 };
-
-const recipe2: Recipe = {
+const recipe2 = {
   name: "Cheese Cake",
   servings: 6,
   vegeterian: true,
@@ -21,8 +18,14 @@ const recipe2: Recipe = {
     { name: "oatmilk", amountGrams: 330 },
   ],
 };
-
-function summarize(recipe: Recipe): void {
-  console.log(`${recipe.name}`);
+function summarize(recipe) {
+  console.log(
+    `To bake a ${recipe.name} for ${recipe.servings} persons you need ${recipe.ingredients.map(
+      (ingredient) => {
+        `return ${ingredient.amountGrams} of ${ingredient.name}`;
+      },
+    )}.`,
+  );
 }
-summarize(recipe1);
+summarize(recipe2);
+//# sourceMappingURL=recipes.js.map

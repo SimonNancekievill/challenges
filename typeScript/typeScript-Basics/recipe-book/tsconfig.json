@@ -15,6 +15,6 @@
     "resolveJsonModule": true,
     "sourceMap": true
   },
-  "include": ["src/**/*", "dist/hello.js"],
+  "include": ["src/**/*", "dist/**/*"],
   "exclude": ["node_modules"]
 }
