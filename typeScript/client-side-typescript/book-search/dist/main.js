@@ -3,6 +3,9 @@ const formElement = document.getElementById("search-form");
 const listElement = document.getElementById("book-list");
 const helloButton = document.getElementById("helloBtn");
 const helloMessage = document.getElementById("output");
+const nameInput = document.getElementById("nameInput");
+const submitButton = document.getElementById("submitBtn");
+const nameParagraph = document.getElementById("displayName");
 async function findBooks(query) {
     const response = await fetch(`https://www.dbooks.org/api/search/${query}`);
     3;
@@ -32,5 +35,8 @@ function getBookCard(data) {
 }
 helloButton.addEventListener("click", (event) => {
     helloMessage.innerText = "Hello from TypeScript!";
+});
+submitButton.addEventListener("click", (event) => {
+    nameParagraph.innerText = nameInput.value;
 });
 //# sourceMappingURL=main.js.map

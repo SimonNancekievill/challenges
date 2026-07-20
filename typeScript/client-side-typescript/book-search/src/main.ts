@@ -2,6 +2,11 @@ const formElement = document.getElementById("search-form") as HTMLFormElement;
 const listElement = document.getElementById("book-list") as HTMLUListElement;
 const helloButton = document.getElementById("helloBtn") as HTMLButtonElement;
 const helloMessage = document.getElementById("output") as HTMLParagraphElement;
+const nameInput = document.getElementById("nameInput") as HTMLTextAreaElement;
+const submitButton = document.getElementById("submitBtn") as HTMLButtonElement;
+const nameParagraph = document.getElementById(
+  "displayName",
+) as HTMLParagraphElement;
 
 interface SearchResult {
   status: string;
@@ -53,4 +58,8 @@ function getBookCard(data: Book): HTMLElement {
 
 helloButton.addEventListener("click", (event: MouseEvent) => {
   helloMessage.innerText = "Hello from TypeScript!";
+});
+
+submitButton.addEventListener("click", (event: MouseEvent) => {
+  nameParagraph.innerText = nameInput.value;
 });
