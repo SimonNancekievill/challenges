@@ -2,7 +2,7 @@ const formElement = document.getElementById("search-form") as HTMLFormElement;
 const listElement = document.getElementById("book-list") as HTMLUListElement;
 const helloButton = document.getElementById("helloBtn") as HTMLButtonElement;
 const helloMessage = document.getElementById("output") as HTMLParagraphElement;
-const nameInput = document.getElementById("nameInput") as HTMLTextAreaElement;
+const nameInput = document.getElementById("nameInput") as HTMLInputElement;
 const submitButton = document.getElementById("submitBtn") as HTMLButtonElement;
 const nameParagraph = document.getElementById(
   "displayName",
@@ -11,6 +11,9 @@ const toggleButton = document.getElementById("toggleBtn") as HTMLButtonElement;
 const hiddenText = document.getElementById(
   "hiddenText",
 ) as HTMLParagraphElement;
+const itemInput = document.getElementById("itemInput") as HTMLInputElement;
+const listButton = document.getElementById("addBtn") as HTMLButtonElement;
+const ItemList = document.getElementById("itemList") as HTMLUListElement;
 
 interface SearchResult {
   status: string;
@@ -74,4 +77,15 @@ toggleButton.addEventListener("click", (event: MouseEvent) => {
   } else {
     hiddenText.style.display = "";
   }
+});
+
+function getListItem(input: string) {
+  const listItem = document.createElement("li");
+  listItem.innerHTML = `
+  <p>${input}</p>`;
+  return listItem;
+}
+listButton.addEventListener("click", (event: MouseEvent) => {
+  const input = itemInput.value;
+  ItemList.append(getListItem(input));
 });

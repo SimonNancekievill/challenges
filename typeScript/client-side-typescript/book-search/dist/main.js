@@ -8,6 +8,9 @@ const submitButton = document.getElementById("submitBtn");
 const nameParagraph = document.getElementById("displayName");
 const toggleButton = document.getElementById("toggleBtn");
 const hiddenText = document.getElementById("hiddenText");
+const itemInput = document.getElementById("itemInput");
+const listButton = document.getElementById("addBtn");
+const ItemList = document.getElementById("itemList");
 async function findBooks(query) {
     const response = await fetch(`https://www.dbooks.org/api/search/${query}`);
     3;
@@ -48,5 +51,15 @@ toggleButton.addEventListener("click", (event) => {
     else {
         hiddenText.style.display = "";
     }
+});
+function getListItem(input) {
+    const listItem = document.createElement("li");
+    listItem.innerHTML = `
+  <p>${input}</p>`;
+    return listItem;
+}
+listButton.addEventListener("click", (event) => {
+    const input = itemInput.value;
+    ItemList.append(getListItem(input));
 });
 //# sourceMappingURL=main.js.map
