@@ -6,6 +6,8 @@ const helloMessage = document.getElementById("output");
 const nameInput = document.getElementById("nameInput");
 const submitButton = document.getElementById("submitBtn");
 const nameParagraph = document.getElementById("displayName");
+const toggleButton = document.getElementById("toggleBtn");
+const hiddenText = document.getElementById("hiddenText");
 async function findBooks(query) {
     const response = await fetch(`https://www.dbooks.org/api/search/${query}`);
     3;
@@ -38,5 +40,13 @@ helloButton.addEventListener("click", (event) => {
 });
 submitButton.addEventListener("click", (event) => {
     nameParagraph.innerText = nameInput.value;
+});
+toggleButton.addEventListener("click", (event) => {
+    if (hiddenText.style.visibility === "visible") {
+        hiddenText.style.visibility = "hidden";
+    }
+    else {
+        hiddenText.style.visibility = "visible";
+    }
 });
 //# sourceMappingURL=main.js.map

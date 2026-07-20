@@ -7,6 +7,10 @@ const submitButton = document.getElementById("submitBtn") as HTMLButtonElement;
 const nameParagraph = document.getElementById(
   "displayName",
 ) as HTMLParagraphElement;
+const toggleButton = document.getElementById("toggleBtn") as HTMLButtonElement;
+const hiddenText = document.getElementById(
+  "hiddenText",
+) as HTMLParagraphElement;
 
 interface SearchResult {
   status: string;
@@ -62,4 +66,12 @@ helloButton.addEventListener("click", (event: MouseEvent) => {
 
 submitButton.addEventListener("click", (event: MouseEvent) => {
   nameParagraph.innerText = nameInput.value;
+});
+
+toggleButton.addEventListener("click", (event: MouseEvent) => {
+  if (hiddenText.style.visibility === "visible") {
+    hiddenText.style.visibility = "hidden";
+  } else {
+    hiddenText.style.visibility = "visible";
+  }
 });
