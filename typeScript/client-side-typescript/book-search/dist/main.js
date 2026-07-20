@@ -55,7 +55,8 @@ toggleButton.addEventListener("click", (event) => {
 function getListItem(input) {
     const listItem = document.createElement("li");
     listItem.innerHTML = `
-  <p>${input}</p>`;
+  <p>${input}</p>
+  <button type="button">delete</button>`;
     return listItem;
 }
 listButton.addEventListener("click", (event) => {
