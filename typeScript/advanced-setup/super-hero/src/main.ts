@@ -1,8 +1,8 @@
+import MarvelData from "./superheroes.json" with { type: "json" };
+
 interface SuperheroData {
   superheroes: string[];
 }
-
-import marvelData from "./superheroes.json";
 
 function logSuperheroCount(data: SuperheroData): void {
   const count = data.superheroes.length;
@@ -12,4 +12,4 @@ function logSuperheroCount(data: SuperheroData): void {
   console.log(`---------------------------`);
 }
 
-logSuperheroCount(marvelData);
+logSuperheroCount(MarvelData);

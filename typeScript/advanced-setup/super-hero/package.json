@@ -1,7 +1,13 @@
 {
+  "scripts": {
+    "build:watch": "tsc --watch",
+    "start:build": "nodemon dist/main.js",
+    "dev": "concurrently \"npm run build:watch\" \"npm run start:build\""
+  },
   "dependencies": {
-    "concurrently": "^10.0.3",
     "node": "^26.5.0",
+    "concurrently": "^10.0.3",
     "nodemon": "^3.1.14"
-  }
+  },
+  "type": "module"
 }
