@@ -1,0 +1,5 @@
+{
+  "watch": ["."],
+  "ext": "txt",
+  "exec": "bun run index.ts"
+}
