@@ -6,4 +6,3 @@ function logSuperheroCount(data) {
     console.log(`---------------------------`);
 }
 logSuperheroCount(marvelData);
-//# sourceMappingURL=main.js.map

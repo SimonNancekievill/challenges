@@ -9,8 +9,6 @@
 
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "sourceMap": true,
-    "skipLibCheck": true,
 
     //coding rules
 
