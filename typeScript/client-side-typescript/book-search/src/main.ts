@@ -124,6 +124,11 @@ decreaseButton.addEventListener("click", (event: MouseEvent) => {
   `;
 });
 
-// colorSelect.addEventListener("change", (event) => {
-//   if()
-// });
+colorSelect.addEventListener("change", (event: Event) => {
+  colorBox.style.backgroundColor = colorSelect.value;
+});
+
+textArea.addEventListener("input", (event: Event) => {
+  const length = textArea.value.length;
+  charCount.textContent = `${length} characters`;
+});
