@@ -14,6 +14,17 @@ const hiddenText = document.getElementById(
 const itemInput = document.getElementById("itemInput") as HTMLInputElement;
 const listButton = document.getElementById("addBtn") as HTMLButtonElement;
 const ItemList = document.getElementById("itemList") as HTMLUListElement;
+const decreaseButton = document.getElementById(
+  "decreaseBtn",
+) as HTMLButtonElement;
+const counter = document.getElementById("counter") as HTMLSpanElement;
+const increaseButton = document.getElementById(
+  "increaseBtn",
+) as HTMLButtonElement;
+const colorBox = document.getElementById("colorBox") as HTMLDivElement;
+const colorSelect = document.getElementById("colorSelect") as HTMLSelectElement;
+const charCount = document.getElementById("charCount") as HTMLParagraphElement;
+const textArea = document.getElementById("textInput") as HTMLTextAreaElement;
 
 interface SearchResult {
   status: string;
@@ -81,12 +92,38 @@ toggleButton.addEventListener("click", (event: MouseEvent) => {
 
 function getListItem(input: string) {
   const listItem = document.createElement("li");
-  listItem.innerHTML = `
-  <p>${input}</p>
-  <button type="button">delete</button>`;
+  const text = document.createElement("p");
+  text.innerText = input;
+  const deleteButton = document.createElement("button");
+  deleteButton.type = "button";
+  deleteButton.innerText = "delete";
+
+  deleteButton.addEventListener("click", (event: MouseEvent) => {
+    listItem.remove();
+  });
+  listItem.append(text, deleteButton);
   return listItem;
 }
 listButton.addEventListener("click", (event: MouseEvent) => {
   const input = itemInput.value;
   ItemList.append(getListItem(input));
 });
+
+let count: number = 0;
+
+increaseButton.addEventListener("click", (event: MouseEvent) => {
+  count++;
+  counter.innerHTML = `
+  ${count}
+  `;
+});
+decreaseButton.addEventListener("click", (event: MouseEvent) => {
+  count--;
+  counter.innerHTML = `
+  ${count}
+  `;
+});
+
+// colorSelect.addEventListener("change", (event) => {
+//   if()
+// });
