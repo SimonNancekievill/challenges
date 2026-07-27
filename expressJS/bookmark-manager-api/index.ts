@@ -24,6 +24,25 @@ const port = 3000;
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+
+app.get("/bookmarks", (req, res) => {
+  res.send(bookmarks);
+});
+
+app.get("/bookmarks/:id", (req, res) => {
+  const id = req.params.id;
+
+  const bookmark =
+    bookmarks.find((bookmark) => bookmark.id.toString() === id) || null;
+
+  if (!bookmark) {
+    res.status(404).json({ error: "Bookmark not found" });
+    return;
+  }
+
+  res.send(bookmark);
+});
+
 app.listen(port, () => {
   console.log(`Server is runnning at http://localhost:${port}`);
 });
