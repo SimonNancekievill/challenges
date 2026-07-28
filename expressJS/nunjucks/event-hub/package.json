@@ -9,6 +9,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "dev": "bun --watch index.ts"
+    "dev": "bun --watch src/index.ts"
+  },
+  "dependencies": {
+    "chokidar": "^5.0.0",
+    "express": "^5.2.1",
+    "nunjucks": "^3.2.4"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/nunjucks": "^3.2.6",
+    "prettier": "^3.9.6",
+    "prettier-plugin-jinja-template": "^2.2.0",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
   }
 }

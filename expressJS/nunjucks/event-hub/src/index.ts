@@ -3,23 +3,24 @@ import nunjucks from "nunjucks";
 
 const app = express();
 
-nunjucks.configure("views", {
+nunjucks.configure("src/views", {
   autoescape: true,
   express: app,
+  watch: true,
 });
 
 app.get("/", (req, res) => {
-  res.render("index.html");
+  res.render("index.njk");
 });
 
 app.get("/events", (req, res) => {
-  res.render("events.html", {
+  res.render("events.njk", {
     events: [
       {
         name: "React Conf",
         date: "June 10, 2025",
         location: "Berlin",
-        soldOut: false,
+        soldOut: true,
       },
       {
         name: "Vue.js Summit",

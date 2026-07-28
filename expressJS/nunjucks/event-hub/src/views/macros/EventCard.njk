@@ -1,0 +1,8 @@
+{% macro EventCard(event) %}
+  <h2>{{ event.date }}</h2>
+  {% if event.soldOut %}
+    <span style="color: red">Sold out</span>
+  {% endif %}
+  <h3>{{ event.name }}</h3>
+  <p>{{ event.location }}</p>
+{% endmacro %}

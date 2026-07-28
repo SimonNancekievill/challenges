@@ -1,0 +1,11 @@
+{% import "macros/EventCard.njk" as Macros %}
+{% extends "base.njk" %}
+{% block content %}
+  <ul>
+    {% for event in events %}
+      <li>{{ Macros.EventCard(event) }}</li>
+    {% else %}
+      <p>No upcoming events.</p>
+    {% endfor %}
+  </ul>
+{% endblock %}
