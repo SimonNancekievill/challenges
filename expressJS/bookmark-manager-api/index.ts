@@ -1,4 +1,5 @@
 import express from "express";
+import { v4 as uuidv4 } from "uuid";
 
 interface Bookmark {
   id: number;
@@ -41,6 +42,20 @@ app.get("/bookmarks/:id", (req, res) => {
   }
 
   res.send(bookmark);
+});
+
+app.post("/bookmarks", (req, res) => {
+  const id = uuidv4();
+  const bookmark = { id: id, ...req.body };
+  bookmarks.push(bookmark);
+  res.status(201).json(bookmark);
+});
+
+app.delete("/bookmarks/:id", (req, res) => {
+  bookmarks = bookmarks.filter(
+    (bookmark) => bookmark.id !== Number(req.params.id),
+  );
+  res.status(204).send();
 });
 
 app.listen(port, () => {

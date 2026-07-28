@@ -8,7 +8,7 @@ http:
   url: "{{baseURL}}/bookmarks/:id"
   params:
     - name: id
-      value: ""
+      value: "\n"
       type: path
   auth: inherit
 

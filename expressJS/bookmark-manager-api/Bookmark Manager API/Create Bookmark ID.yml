@@ -1,0 +1,24 @@
+info:
+  name: Create Bookmark ID
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{baseURL}}/bookmarks"
+  body:
+    type: json
+    data: |-
+      {
+      "id": "4",
+      "url": "https://typescriptlang.org",
+      "title": "test",
+      "tag": "test",
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

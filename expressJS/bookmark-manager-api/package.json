@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "express": "^5.2.1",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "uuid": "^14.0.1"
   }
 }
