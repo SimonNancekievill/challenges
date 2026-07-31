@@ -2,8 +2,8 @@ import express from "express";
 import nunjucks from "nunjucks";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import postRoutes from "./routes/publicRoutes";
-import navRoutes from "./routes/navRoutes";
+import postRoutes from "./routes/post.route";
+import navRoutes from "./routes/nav.route";
 
 interface Post {
   title: string;
