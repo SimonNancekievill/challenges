@@ -1,11 +1,8 @@
-import { Router, Request, Response } from "express";
-import { loadPosts, PAGE_SIZE, slugify, formatDate } from "../app";
+import { Response, Request } from "express";
+import { PAGE_SIZE, slugify, formatDate, loadPosts } from "../app";
 
-const router = Router();
-
-router.get("/", (req: Request, res: Response) => {
+export function listPosts(req: Request, res: Response) {
   const posts = loadPosts();
-
   const authorFilter =
     typeof req.query.author === "string" ? req.query.author.trim() : "";
   const sort = req.query.sort === "oldest" ? "oldest" : "newest";
@@ -50,9 +47,9 @@ router.get("/", (req: Request, res: Response) => {
       hasNext: currentPage < totalPages,
     },
   });
-});
+}
 
-router.get("/posts/:slug", (req: Request, res: Response) => {
+export function showPost(req: Request, res: Response) {
   const slug = Array.isArray(req.params.slug)
     ? req.params.slug[0]
     : req.params.slug;
@@ -71,6 +68,4 @@ router.get("/posts/:slug", (req: Request, res: Response) => {
   res.render("post.html", {
     post: { ...post, createdAt: formatDate(post.createdAt) },
   });
-});
-
-export default router;
+}
