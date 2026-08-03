@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { PAGE_SIZE, slugify, formatDate, loadPosts } from "..";
+import { PAGE_SIZE, slugify, formatDate, loadPosts } from "../index";
 
 export function listPosts(req: Request, res: Response) {
   const posts = loadPosts();
@@ -36,7 +36,7 @@ export function listPosts(req: Request, res: Response) {
     createdAt: formatDate(post.createdAt),
   }));
 
-  res.render("index.html", {
+  res.render("src/views/index.html", {
     posts: view,
     controls: {
       author: authorFilter,
@@ -65,7 +65,7 @@ export function showPost(req: Request, res: Response) {
     res.status(404).send("Post not found");
     return;
   }
-  res.render("post.html", {
+  res.render("src/views/post.html", {
     post: { ...post, createdAt: formatDate(post.createdAt) },
   });
 }
