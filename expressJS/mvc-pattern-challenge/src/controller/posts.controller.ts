@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { PAGE_SIZE, slugify, formatDate, loadPosts } from "../app";
+import { PAGE_SIZE, slugify, formatDate, loadPosts } from "..";
 
 export function listPosts(req: Request, res: Response) {
   const posts = loadPosts();
