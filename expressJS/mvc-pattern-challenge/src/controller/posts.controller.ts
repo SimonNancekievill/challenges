@@ -1,8 +1,8 @@
 import { Response, Request } from "express";
 import { PAGE_SIZE, slugify, formatDate, loadPosts } from "../index";
 
-export function listPosts(req: Request, res: Response) {
-  const posts = loadPosts();
+export async function listPosts(req: Request, res: Response) {
+  const posts = await loadPosts();
   const authorFilter =
     typeof req.query.author === "string" ? req.query.author.trim() : "";
   const sort = req.query.sort === "oldest" ? "oldest" : "newest";
@@ -49,7 +49,7 @@ export function listPosts(req: Request, res: Response) {
   });
 }
 
-export function showPost(req: Request, res: Response) {
+export async function showPost(req: Request, res: Response) {
   const slug = Array.isArray(req.params.slug)
     ? req.params.slug[0]
     : req.params.slug;
@@ -59,7 +59,7 @@ export function showPost(req: Request, res: Response) {
     return;
   }
 
-  const posts = loadPosts();
+  const posts = await loadPosts();
   const post = posts.find((p) => slugify(p.title) === slug);
   if (!post) {
     res.status(404).send("Post not found");
