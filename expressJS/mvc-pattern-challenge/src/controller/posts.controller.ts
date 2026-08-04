@@ -1,5 +1,10 @@
 import { Response, Request } from "express";
-import { PAGE_SIZE, slugify, formatDate, loadPosts } from "../index";
+import {
+  slugify,
+  formatDate,
+  loadPosts,
+  PAGE_SIZE,
+} from "../models/post.model";
 
 export async function listPosts(req: Request, res: Response) {
   const posts = await loadPosts();
