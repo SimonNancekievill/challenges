@@ -1,6 +1,7 @@
 import { getDB } from "../db/database";
 
 export interface Post {
+  id: number;
   title: string;
   image: string;
   author: string;
@@ -28,4 +29,39 @@ export function formatDate(unix: number): string {
     month: "long",
     day: "numeric",
   });
+}
+
+export async function createBlogEntry(
+  entry: Omit<Post, "id">,
+): Promise<number> {
+  const db = getDB();
+  const result = await db.run(
+    `
+        INSERT INTO posts (title, teaser, author, createdAt, image,content) VALUES (@title, @teaser, @author, @createdAt, @image, @content)`,
+    {
+      "@title": entry.title,
+      "@teaser": entry.teaser,
+      "@author": entry.author,
+      "@createdAt": entry.createdAt,
+      "@image": entry.image,
+      "@content": entry.content,
+    },
+  );
+  return result.lastID!;
+}
+
+export async function updateBlogEntry(
+  id: number,
+  entry: Omit<Post, "id">,
+): Promise<void> {
+  const db = getDB();
+  await db.run(
+    `
+  UPDATE posts SET title = @title WHERE id = @id
+  `,
+    {
+      "@title": entry.title,
+      "@id": id,
+    },
+  );
 }

@@ -7,6 +7,7 @@ import navRoutes from "./routes/nav.route";
 import { connectDB, closeDB } from "./db/database";
 
 const app = express();
+app.use(express.json());
 
 await connectDB();
 

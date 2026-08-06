@@ -4,6 +4,7 @@ import {
   formatDate,
   loadPosts,
   PAGE_SIZE,
+  createBlogEntry,
 } from "../models/post.model";
 
 export async function listPosts(req: Request, res: Response) {
@@ -73,4 +74,22 @@ export async function showPost(req: Request, res: Response) {
   res.render("src/views/post.html", {
     post: { ...post, createdAt: formatDate(post.createdAt) },
   });
+}
+export async function createPost(req: Request, res: Response) {
+  const { title, teaser, author, image, content } = req.body;
+
+  if (!title || !teaser || !author || !image || !content) {
+    res.status(400).json({ error: "Missing required fields" });
+    return;
+  }
+
+  const newId = await createBlogEntry({
+    title,
+    teaser,
+    author,
+    content,
+    image: image ?? null,
+    createdAt: Math.floor(Date.now() / 1000),
+  });
+  res.status(201).json({ id: newId });
 }
