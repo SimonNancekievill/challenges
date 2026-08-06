@@ -1,0 +1,22 @@
+{
+  "name": "sqlite-setup",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "db:seed": "sqlite3 db/blog.db < db/seeddb.sql"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/sqlite3": "^3.1.11"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "3": "^2.1.0",
+    "express": "^5.2.1",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^6.0.1"
+  }
+}
