@@ -1,0 +1,19 @@
+info:
+  name: Delete Thread with Comments
+  type: http
+  seq: 10
+
+http:
+  method: DELETE
+  url: http://localhost:3000/threads/:id
+  params:
+    - name: id
+      value: "4"
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
