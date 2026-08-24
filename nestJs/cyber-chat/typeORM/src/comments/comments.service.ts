@@ -1,33 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { CommentsRepository } from './comments.repository';
-import type { Comment } from './comments.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Comment } from './entities/comment.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CommentsService {
-  constructor(private readonly commentsRepository: CommentsRepository) {}
+  constructor(
+    @InjectRepository(Comment)
+    private readonly comments: Repository<Comment>,
+  ) {}
 
-  findAll(): Comment[] {
-    return this.commentsRepository.findAll();
+  findAll(): Promise<Comment[]> {
+    return this.comments.find();
   }
 
-  findById(id: number): Comment | undefined {
-    return this.commentsRepository.findById(id);
+  findById(id: string): Promise<Comment | null> {
+    return this.comments.findOneBy({ id: id });
   }
 
-  deleteComment(id: number): Comment | undefined | void {
-    const comment = this.commentsRepository.findById(id);
+  async deleteComment(id: string): Promise<Comment | undefined | void> {
+    const comment = await this.comments.findOneBy({ id: id });
     if (!comment) return undefined;
     comment.body = 'deleted';
-    return comment;
+    return this.comments.save(comment);
   }
 
-  findByThreadId(threadId: number): Comment[] {
-    return this.commentsRepository
-      .findAll()
-      .filter((comment) => comment.threadId === threadId);
+  async findByThreadId(threadId: string): Promise<Comment[] | null> {
+    const comments = await this.comments.find({
+      where: { threadId: threadId },
+    });
+    return this.comments.save(comments);
   }
 
-  delete(id: number): boolean {
-    return this.commentsRepository.delete(id);
+  async delete(id: string): Promise<boolean> {
+    const result = await this.comments.delete(id);
+    return (result.affected ?? 0) > 0;
   }
 }

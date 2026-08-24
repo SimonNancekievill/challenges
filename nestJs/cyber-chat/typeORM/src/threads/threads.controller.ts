@@ -5,12 +5,17 @@ import {
   Post,
   Param,
   NotFoundException,
-  ParseIntPipe,
   Delete,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { ThreadsService } from './threads.service';
-import type { ThreadPayload, ThreadWithComments } from './threads.repository';
 import { CommentsService } from 'src/comments/comments.service';
+
+export type ThreadPayload = {
+  title: string;
+  author: string;
+  body: string;
+};
 
 @Controller('threads')
 export class ThreadsController {
@@ -25,14 +30,12 @@ export class ThreadsController {
   }
 
   @Get(':id')
-  findOneThread(
-    @Param('id', ParseIntPipe) threadId: number,
-  ): ThreadWithComments {
-    const selectedThread = this.threadsService.findById(threadId);
+  async findOneThread(@Param('id', ParseUUIDPipe) threadId: string) {
+    const selectedThread = await this.threadsService.findById(threadId);
     if (!selectedThread) {
       throw new NotFoundException(`Thread with Id: ${threadId} not found.`);
     }
-    const threadComments = this.commentsService.findByThreadId(threadId);
+    const threadComments = await this.commentsService.findByThreadId(threadId);
     return { ...selectedThread, comments: threadComments };
   }
 
@@ -46,23 +49,18 @@ export class ThreadsController {
   }
 
   @Delete(':id')
-  deleteThread(@Param('id', ParseIntPipe) threadId: number): {
+  async deleteThread(@Param('id', ParseUUIDPipe) threadId: string): Promise<{
     message: string;
-  } {
-    const deletedThread = this.threadsService.delete(threadId);
+  }> {
+    const threadComments = await this.commentsService.findByThreadId(threadId);
+    await Promise.all(
+      threadComments!.map((comment) => this.commentsService.delete(comment.id)),
+    );
+
+    const deletedThread = await this.threadsService.delete(threadId);
     if (!deletedThread) {
       throw new NotFoundException(`thread with ID: ${threadId} not found.`);
     }
-    const deletedComments = this.commentsService.findByThreadId(threadId);
-    if (!deletedComments) {
-      throw new NotFoundException(
-        `Comments with threadId: ${threadId} not found.`,
-      );
-    }
-
-    deletedComments.forEach((comment) =>
-      this.commentsService.delete(comment.id),
-    );
     return { message: `Thread with ID: ${threadId} deleted.` };
   }
 }

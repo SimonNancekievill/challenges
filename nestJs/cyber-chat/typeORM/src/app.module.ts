@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ThreadsModule } from './threads/threads.module';
 import { CommentsModule } from './comments/comments.module';
-import { CommentsService } from './comments/comments.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Comment } from './comments/entities/comment.entity';
 import { Thread } from './threads/entities/thread.entity';
@@ -23,6 +22,6 @@ import { Thread } from './threads/entities/thread.entity';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, CommentsService],
+  providers: [AppService],
 })
 export class AppModule {}

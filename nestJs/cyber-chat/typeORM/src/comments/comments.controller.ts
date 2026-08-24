@@ -4,18 +4,20 @@ import {
   Get,
   NotFoundException,
   Param,
-  ParseIntPipe,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import type { Comment } from './comments.repository';
+import { Comment } from './entities/comment.entity';
 
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Get(':id')
-  findOneComment(@Param('id', ParseIntPipe) commentId: number): Comment {
-    const selectedComment = this.commentsService.findById(commentId);
+  async findOneComment(
+    @Param('id', ParseUUIDPipe) commentId: string,
+  ): Promise<Comment> {
+    const selectedComment = await this.commentsService.findById(commentId);
     if (!selectedComment) {
       throw new NotFoundException(`Comment with Id: ${commentId} not found.`);
     }
@@ -23,8 +25,8 @@ export class CommentsController {
   }
 
   @Delete(':id')
-  deleteComment(@Param('id', ParseIntPipe) commentId: number) {
-    const selectedComment = this.commentsService.deleteComment(commentId);
+  async deleteComment(@Param('id', ParseUUIDPipe) commentId: string) {
+    const selectedComment = await this.commentsService.deleteComment(commentId);
     if (!selectedComment) {
       throw new NotFoundException(`Comment with Id: ${commentId} not found.`);
     }

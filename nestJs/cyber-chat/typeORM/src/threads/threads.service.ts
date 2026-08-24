@@ -1,20 +1,24 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { ThreadsRepository } from './threads.repository';
-import type { Thread } from './threads.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Thread } from './entities/thread.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ThreadsService {
-  constructor(private readonly threadsRepository: ThreadsRepository) {}
+  constructor(
+    @InjectRepository(Thread)
+    private readonly threadsRepository: Repository<Thread>,
+  ) {}
 
-  findAll(): Thread[] {
-    return this.threadsRepository.findAll();
+  findAll(): Promise<Thread[]> {
+    return this.threadsRepository.find();
   }
 
-  findById(threadId: number): Thread | undefined {
-    return this.threadsRepository.findById(threadId);
+  findById(threadId: string): Promise<Thread | null> {
+    return this.threadsRepository.findOneBy({ id: threadId });
   }
 
-  create(title: string, author: string, body: string): Thread {
+  create(title: string, author: string, body: string): Promise<Thread> {
     if (!title) {
       throw new BadRequestException('Title is required.');
     }
@@ -25,10 +29,12 @@ export class ThreadsService {
       throw new BadRequestException('Body is required.');
     }
 
-    return this.threadsRepository.create({ title, author, body });
+    const newThread = this.threadsRepository.create({ title, author, body });
+    return this.threadsRepository.save(newThread);
   }
 
-  delete(threadId: number): boolean {
-    return this.threadsRepository.delete(threadId);
+  async delete(threadId: string): Promise<boolean> {
+    const result = await this.threadsRepository.delete(threadId);
+    return (result.affected ?? 0) > 0;
   }
 }

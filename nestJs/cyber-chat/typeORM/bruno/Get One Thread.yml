@@ -8,7 +8,7 @@ http:
   url: http://localhost:3000/threads/:id
   params:
     - name: id
-      value: "30"
+      value: 1f9945d0-597a-4c96-85a0-7888b4a5e3d3
       type: path
   auth: inherit
 

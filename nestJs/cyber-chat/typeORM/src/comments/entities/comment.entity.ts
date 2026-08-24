@@ -13,6 +13,9 @@ export class Comment {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
+  @Column()
+  threadId!: string;
+
   @ManyToOne(() => Thread)
   @JoinColumn({ name: 'threadId' })
   thread!: Thread;
