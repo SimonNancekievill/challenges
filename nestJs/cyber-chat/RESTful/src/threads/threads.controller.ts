@@ -7,15 +7,21 @@ import {
   NotFoundException,
   Delete,
   ParseUUIDPipe,
+  Patch,
+  SerializeOptions,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { ThreadsService } from './threads.service';
 import { CommentsService } from 'src/comments/comments.service';
-
-export type ThreadPayload = {
-  title: string;
-  author: string;
-  body: string;
-};
+import { CreateThreadDto } from './dtos/createThread.dto';
+import { Thread } from './entities/thread.entity';
+import { UpdateThreadDto } from './dtos/updateThread.dto';
+import { ThreadResponseDto } from './dtos/threadResponse.dto';
+import { ThreadWithCommentsDto } from './dtos/threadWithComments.dto';
+import { CommentsResponseDto } from 'src/comments/dtos/commentsResponse.dto';
+import { CreateCommentDto } from 'src/comments/dtos/createComment.dto';
+import { Comment } from 'src/comments/entities/comment.entity';
 
 @Controller('threads')
 export class ThreadsController {
@@ -25,11 +31,13 @@ export class ThreadsController {
   ) {}
 
   @Get()
-  findAllThreads() {
+  @SerializeOptions({ type: ThreadResponseDto })
+  async findAllThreads(): Promise<Thread[]> {
     return this.threadsService.findAll();
   }
 
   @Get(':id')
+  @SerializeOptions({ type: ThreadWithCommentsDto })
   async findOneThread(@Param('id', ParseUUIDPipe) threadId: string) {
     const selectedThread = await this.threadsService.findById(threadId);
     if (!selectedThread) {
@@ -40,7 +48,8 @@ export class ThreadsController {
   }
 
   @Post()
-  createThread(@Body() threadPayload: ThreadPayload) {
+  @SerializeOptions({ type: ThreadWithCommentsDto })
+  createThread(@Body() threadPayload: CreateThreadDto) {
     return this.threadsService.create(
       threadPayload.title,
       threadPayload.author,
@@ -48,10 +57,31 @@ export class ThreadsController {
     );
   }
 
+  @Post('/:id/comments')
+  @SerializeOptions({ type: CommentsResponseDto })
+  async createComment(
+    @Param('id', ParseUUIDPipe) threadId: string,
+    @Body() dto: CreateCommentDto,
+  ): Promise<Comment> {
+    return this.commentsService.create(threadId, dto);
+  }
+
+  @Patch(':id')
+  @SerializeOptions({ type: ThreadResponseDto })
+  async updateThread(
+    @Param('id', ParseUUIDPipe) threadId: string,
+    @Body() dto: UpdateThreadDto,
+  ): Promise<Thread | null> {
+    const thread = await this.threadsService.update(threadId, dto);
+
+    return thread;
+  }
+
   @Delete(':id')
-  async deleteThread(@Param('id', ParseUUIDPipe) threadId: string): Promise<{
-    message: string;
-  }> {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteThread(
+    @Param('id', ParseUUIDPipe) threadId: string,
+  ): Promise<void> {
     const threadComments = await this.commentsService.findByThreadId(threadId);
     await Promise.all(
       threadComments!.map((comment) => this.commentsService.delete(comment.id)),
@@ -61,6 +91,5 @@ export class ThreadsController {
     if (!deletedThread) {
       throw new NotFoundException(`thread with ID: ${threadId} not found.`);
     }
-    return { message: `Thread with ID: ${threadId} deleted.` };
   }
 }

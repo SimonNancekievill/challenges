@@ -1,0 +1,25 @@
+info:
+  name: Create One Comment to One Thread
+  type: http
+  seq: 8
+
+http:
+  method: POST
+  url: http://localhost:3000/threads/:id/comments
+  params:
+    - name: id
+      value: 60b71011-be62-4ba7-b796-b2b14792112c
+      type: path
+  body:
+    type: json
+    data: |-
+      {"author": "Simon",
+      "body": "Newly created comment"}
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

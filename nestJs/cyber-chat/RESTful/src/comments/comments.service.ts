@@ -1,13 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Comment } from './entities/comment.entity';
 import { Repository } from 'typeorm';
+import { CreateCommentDto } from './dtos/createComment.dto';
+import { ThreadsService } from '../threads/threads.service';
 
 @Injectable()
 export class CommentsService {
   constructor(
     @InjectRepository(Comment)
     private readonly comments: Repository<Comment>,
+    private readonly threadService: ThreadsService,
   ) {}
 
   findAll(): Promise<Comment[]> {
@@ -26,10 +29,21 @@ export class CommentsService {
   }
 
   async findByThreadId(threadId: string): Promise<Comment[] | null> {
-    const comments = await this.comments.find({
+    return this.comments.find({
       where: { threadId: threadId },
     });
-    return this.comments.save(comments);
+  }
+
+  async create(threadId: string, dto: CreateCommentDto): Promise<Comment> {
+    const thread = await this.threadService.findById(threadId);
+    if (!thread) {
+      throw new NotFoundException(`Thread with ID ${threadId} not found.`);
+    }
+    const comment = this.comments.create({
+      ...dto,
+      thread,
+    });
+    return this.comments.save(comment);
   }
 
   async delete(id: string): Promise<boolean> {

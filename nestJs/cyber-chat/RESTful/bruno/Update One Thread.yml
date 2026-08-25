@@ -1,0 +1,28 @@
+info:
+  name: Update One Thread
+  type: http
+  seq: 7
+
+http:
+  method: PATCH
+  url: http://localhost:3000/threads/:id
+  params:
+    - name: id
+      value: 84393e09-6d7c-4e57-804b-6c0bf50f8619
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "title": "Updated Thread",
+        "author": "Simon",
+        "body": "lorem ipsum"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

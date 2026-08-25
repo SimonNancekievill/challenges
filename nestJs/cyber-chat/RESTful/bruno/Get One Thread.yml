@@ -8,7 +8,7 @@ http:
   url: http://localhost:3000/threads/:id
   params:
     - name: id
-      value: 1f9945d0-597a-4c96-85a0-7888b4a5e3d3
+      value: 60b71011-be62-4ba7-b796-b2b14792112c
       type: path
   auth: inherit
 
@@ -17,3 +17,4 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
+  forwardAuthorizationHeader: true

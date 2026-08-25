@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Thread } from './entities/thread.entity';
 import { Repository } from 'typeorm';
+import { UpdateThreadDto } from './dtos/updateThread.dto';
 
 @Injectable()
 export class ThreadsService {
@@ -31,6 +32,11 @@ export class ThreadsService {
 
     const newThread = this.threadsRepository.create({ title, author, body });
     return this.threadsRepository.save(newThread);
+  }
+
+  async update(threadId: string, dto: UpdateThreadDto): Promise<Thread | null> {
+    await this.threadsRepository.update(threadId, dto);
+    return this.threadsRepository.findOneBy({ id: threadId });
   }
 
   async delete(threadId: string): Promise<boolean> {
