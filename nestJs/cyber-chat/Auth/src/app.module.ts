@@ -6,6 +6,8 @@ import { CommentsModule } from './comments/comments.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Comment } from './comments/entities/comment.entity';
 import { Thread } from './threads/entities/thread.entity';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
@@ -14,12 +16,13 @@ import { Thread } from './threads/entities/thread.entity';
     TypeOrmModule.forRoot({
       type: 'better-sqlite3',
       database: '@data/cyberchat.sqlite',
-      entities: [Comment, Thread],
+      entities: [Comment, Thread, User],
       synchronize: true,
       logging: false,
       enableWAL: true,
       statementCacheSize: 100,
     }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
