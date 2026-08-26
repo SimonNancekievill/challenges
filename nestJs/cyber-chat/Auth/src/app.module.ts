@@ -8,6 +8,7 @@ import { Comment } from './comments/entities/comment.entity';
 import { Thread } from './threads/entities/thread.entity';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { User } from './users/entities/user.entity';
       statementCacheSize: 100,
     }),
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
