@@ -1,4 +1,3 @@
-import { Exclude } from 'class-transformer';
 import { MaxLength } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -11,7 +10,6 @@ export class User {
   @MaxLength(120)
   username!: string;
 
-  @Exclude()
   @Column()
   passwordHash!: string;
 }
