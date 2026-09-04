@@ -1,0 +1,12 @@
+{
+  "name": "scoreboard-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "typescript": "^7.0.2"
+  }
+}
