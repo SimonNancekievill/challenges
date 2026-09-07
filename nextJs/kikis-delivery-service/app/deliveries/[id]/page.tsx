@@ -1,4 +1,6 @@
 import { getDeliveryById } from "@/lib/services/deliveriesService";
+import { Suspense } from "react";
+import Loading from "../loading";
 
 export default async function DeliveryDetailPage({
   params,
@@ -16,11 +18,13 @@ export default async function DeliveryDetailPage({
 
   return (
     <>
-      <h2>Delivery {id}</h2>
-      <p>
-        From {delivery.pickup} to {delivery.destination}
-      </p>
-      <p>Status: {delivery.status}</p>
+      <Suspense fallback={<Loading />}>
+        <h2>Delivery {id}</h2>
+        <p>
+          From {delivery.pickup} to {delivery.destination}
+        </p>
+        <p>Status: {delivery.status}</p>
+      </Suspense>
     </>
   );
 }
