@@ -1,6 +1,7 @@
 import { getAllDeliveries } from "@/lib/services/deliveriesService";
 import { Suspense } from "react";
 import Loading from "./loading";
+import Link from "next/link";
 
 export default async function DeliveriesPage() {
   const deliveries = await getAllDeliveries();
@@ -12,7 +13,9 @@ export default async function DeliveriesPage() {
         <Suspense fallback={<Loading />}>
           {deliveries.map((delivery) => (
             <li key={delivery.id}>
-              {delivery.pickup} to {delivery.destination} ({delivery.status})
+              <Link href={`/deliveries/${delivery.id}`}>
+                {delivery.pickup} to {delivery.destination} ({delivery.status})
+              </Link>
             </li>
           ))}
         </Suspense>

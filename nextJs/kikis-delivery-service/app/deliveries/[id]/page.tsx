@@ -1,6 +1,7 @@
 import { getDeliveryById } from "@/lib/services/deliveriesService";
 import { Suspense } from "react";
 import Loading from "../loading";
+import Link from "next/link";
 
 export default async function DeliveryDetailPage({
   params,
@@ -25,6 +26,7 @@ export default async function DeliveryDetailPage({
         </p>
         <p>Status: {delivery.status}</p>
       </Suspense>
+      <Link href={"/deliveries"}>Go back</Link>
     </>
   );
 }
