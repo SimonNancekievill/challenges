@@ -17,8 +17,14 @@ import { Comment } from 'src/comments/entity/comment.entity';
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        type: 'better-sqlite3',
-        database: config.get<string>('DATABASE_PATH'),
+        type: 'postgres',
+        // database: config.get<string>('DATABASE_PATH'),
+        host: config.get('POSTGRES_HOST'),
+        port: config.get('POSTGRES_PORT'),
+        username: config.get('POSTGRES_USER'),
+        password: config.get('POSTGRES_PASSWORD'),
+        database: config.get('POSTGRES_DATABASE'),
+        ssl: true,
         synchronize: true,
         entities: [User, Comment, Thread],
         logging: true,

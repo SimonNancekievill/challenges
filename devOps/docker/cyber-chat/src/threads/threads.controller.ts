@@ -8,6 +8,7 @@ import {
   UseGuards,
   Request,
   ParseIntPipe,
+  SerializeOptions,
 } from '@nestjs/common';
 import { ThreadsService } from './threads.service';
 import { CommentsService } from '../comments/comments.service';
@@ -28,6 +29,7 @@ export class ThreadsController {
   ) {}
 
   @Get('/')
+  @SerializeOptions({ type: ThreadResponseDto })
   async getAll(): Promise<ThreadResponseDto[]> {
     return this.threadsService.getAll();
   }

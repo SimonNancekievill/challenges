@@ -3,15 +3,15 @@ import {
   InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
-} from "@nestjs/common";
-import { CommentsService } from "../comments/comments.service";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Thread, type CreateThreadPayload } from "./entity/thread.entity";
-import type { Repository, UpdateResult } from "typeorm";
-import { plainToInstance } from "class-transformer";
-import { ThreadWithCommentsResponseDto } from "./dto/ThreadWithCommentsResponseDto";
-import { ThreadResponseDto } from "./dto/ThreadResponseDto";
-import type { ValidatedUser } from "../users/entity/user.entity";
+} from '@nestjs/common';
+import { CommentsService } from '../comments/comments.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Thread, type CreateThreadPayload } from './entity/thread.entity';
+import type { Repository, UpdateResult } from 'typeorm';
+import { plainToInstance } from 'class-transformer';
+import { ThreadWithCommentsResponseDto } from './dto/ThreadWithCommentsResponseDto';
+import { ThreadResponseDto } from './dto/ThreadResponseDto';
+import type { ValidatedUser } from '../users/entity/user.entity';
 
 @Injectable()
 export class ThreadsService {
@@ -23,6 +23,7 @@ export class ThreadsService {
 
   async getAll(): Promise<ThreadResponseDto[]> {
     const threads = await this.threadsRepository.find();
+    console.log(threads);
     const instance = plainToInstance(ThreadResponseDto, threads);
     return instance;
   }
@@ -30,7 +31,7 @@ export class ThreadsService {
   async getById(id: number): Promise<ThreadWithCommentsResponseDto> {
     const thread = await this.threadsRepository.findOneBy({ id });
 
-    if (!thread) throw new NotFoundException("Thread not found");
+    if (!thread) throw new NotFoundException('Thread not found');
 
     const comments = await this.commentsService.getByThreadId(id);
 
@@ -51,22 +52,22 @@ export class ThreadsService {
     const thread = await this.threadsRepository.findOneBy({ id });
 
     if (!thread) {
-      throw new NotFoundException("Thread not found");
+      throw new NotFoundException('Thread not found');
     }
 
     const isAuthor = thread.author === user.username;
-    const isAdmin = user.roles.includes("ADMIN");
+    const isAdmin = user.roles.includes('ADMIN');
 
     if (!isAuthor && !isAdmin) {
       throw new UnauthorizedException(
-        "You are not authorized to delete this thread",
+        'You are not authorized to delete this thread',
       );
     }
 
     const deletionSuccess = await this.threadsRepository.delete(id);
 
     if (!deletionSuccess) {
-      throw new InternalServerErrorException("Thread could not be deleted");
+      throw new InternalServerErrorException('Thread could not be deleted');
     }
 
     this.commentsService.deleteByThreadId(id);
@@ -78,7 +79,7 @@ export class ThreadsService {
     const updatedThread = await this.threadsRepository.update({ id }, thread);
 
     if (!updatedThread) {
-      throw new NotFoundException("Thread not found");
+      throw new NotFoundException('Thread not found');
     }
 
     return updatedThread;
