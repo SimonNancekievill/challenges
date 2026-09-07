@@ -5,7 +5,7 @@ export default async function DeliveriesPage() {
 
   return (
     <>
-      <h1>All Deliveries</h1>
+      <h2>All Deliveries</h2>
       <ul>
         {deliveries.map((delivery) => (
           <li key={delivery.id}>

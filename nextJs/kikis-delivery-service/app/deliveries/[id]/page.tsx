@@ -9,14 +9,14 @@ export default async function DeliveryDetailPage({
   if (!delivery) {
     return (
       <>
-        <h1>Delivery {id} not found.</h1>
+        <h2>Delivery {id} not found.</h2>
       </>
     );
   }
 
   return (
     <>
-      <h1>Delivery {id}</h1>
+      <h2>Delivery {id}</h2>
       <p>
         From {delivery.pickup} to {delivery.destination}
       </p>
