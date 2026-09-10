@@ -7,7 +7,7 @@ export default function NewDeliveryPage() {
       <input name="destination" placeholder="Destination" />
       <button
         type="submit"
-        className="bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+        className="bg-brand px-4 py-2 text-white hover:bg-brand-muted"
       >
         Create request
       </button>
