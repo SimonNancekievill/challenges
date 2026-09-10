@@ -25,7 +25,7 @@ export default function DeliveryFilter({
         <option value="fulfilled">Fulfilled</option>
         <option value="denied">Denied</option>
       </select>
-      <ul>
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {visible.map((delivery) => (
           <li key={delivery.id}>
             {delivery.pickup} to {delivery.destination} ({delivery.status})
