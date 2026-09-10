@@ -2,6 +2,8 @@ import { getDeliveryById } from "@/lib/services/deliveriesService";
 import { Suspense } from "react";
 import Loading from "../loading";
 import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default async function DeliveryDetailPage({
   params,
@@ -18,15 +20,21 @@ export default async function DeliveryDetailPage({
   }
 
   return (
-    <>
+    <Card>
       <Suspense fallback={<Loading />}>
-        <h2>Delivery {id}</h2>
-        <p>
-          From {delivery.pickup} to {delivery.destination}
-        </p>
-        <p>Status: {delivery.status}</p>
+        <CardHeader>
+          <CardTitle>Delivery {id}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p>
+            From {delivery.pickup} to {delivery.destination}
+          </p>
+          <p>Status: {delivery.status}</p>
+        </CardContent>
       </Suspense>
-      <Link href={"/deliveries"}>Go back</Link>
-    </>
+      <Button variant="link" className="justify-start">
+        <Link href={"/deliveries"}>Go back</Link>
+      </Button>
+    </Card>
   );
 }

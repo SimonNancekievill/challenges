@@ -2,6 +2,13 @@
 
 import type { DeliveryRequest } from "@/lib/services/deliveriesService";
 import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 export default function DeliveryFilter({
   deliveries,
@@ -15,16 +22,18 @@ export default function DeliveryFilter({
       : deliveries.filter((delivery) => delivery.status === status);
   return (
     <>
-      <select
-        value={status}
-        onChange={(event) => setStatus(event.target.value)}
-      >
-        <option value="all">All</option>
-        <option value="active">Active</option>
-        <option value="accepted">Accepted</option>
-        <option value="fulfilled">Fulfilled</option>
-        <option value="denied">Denied</option>
-      </select>
+      <Select value={status} onValueChange={(value) => setStatus(value!)}>
+        <SelectTrigger>
+          <SelectValue placeholder="Filter by status" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All</SelectItem>
+          <SelectItem value="active">Active</SelectItem>
+          <SelectItem value="accepted">Accepted</SelectItem>
+          <SelectItem value="fulfilled">Fulfilled</SelectItem>
+          <SelectItem value="denied">Denied</SelectItem>
+        </SelectContent>
+      </Select>
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {visible.map((delivery) => (
           <li key={delivery.id}>
