@@ -1,5 +1,4 @@
 import { getSnippetById } from "@/lib/services/snippetsService";
-import { JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
 
 export default async function SnippetDetailPage({

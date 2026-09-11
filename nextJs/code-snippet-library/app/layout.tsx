@@ -1,4 +1,5 @@
 import { JetBrains_Mono, Inter } from "next/font/google";
+import "./globals.css";
 
 const jetBrains = JetBrains_Mono({
   weight: "400",
@@ -16,10 +17,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${jetBrains.variable} ${inter.variable}`}>
       <head>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pumpkin.min.css"
-        ></link>
         <style>{`pre, code {font-family: var(--font-jetBrains-mono);}
         body {font-family: var(--font-inter)}`}</style>
       </head>
