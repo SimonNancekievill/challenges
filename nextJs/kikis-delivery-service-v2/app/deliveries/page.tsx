@@ -4,6 +4,7 @@ import Loading from "./loading";
 import DeliveryFilter from "@/components/DeliveryFilter";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { ModeToggle } from "@/components/ModeToggle";
 
 export default async function DeliveriesPage() {
   const deliveries = await getAllDeliveries();
@@ -11,6 +12,7 @@ export default async function DeliveriesPage() {
   return (
     <>
       <h2>All Deliveries</h2>
+      <ModeToggle />
       <Suspense fallback={<Loading />}>
         <DeliveryFilter deliveries={deliveries} />
       </Suspense>
