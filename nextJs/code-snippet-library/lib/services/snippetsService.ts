@@ -37,3 +37,14 @@ export function getAllSnippets(): Snippet[] {
 export function getSnippetById(id: string): Snippet | null {
   return snippets.find((snippet) => snippet.id === id) || null;
 }
+
+export async function createSnippet(
+  snippet: Pick<Snippet, "title" | "language" | "description" | "code">,
+): Promise<Snippet> {
+  const [created] = await sql<Snippet[]>`
+INSERT INTO snippets (title, language, description, code)
+VALUES (${snippet.title}, ${snippet.language}, ${snippet.description}, ${snippet.code}) 
+RETURNING *`;
+
+  return created;
+}
