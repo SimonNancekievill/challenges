@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import addSnippet from "../actions";
 
 export default function NewSnippetPage() {
   return (
-    <form>
+    <form action={addSnippet}>
       <div className="grid gap-1">
         <Label htmlFor="title">Title</Label>
         <Input id="title" name="title" placeholder="my code snippet" />
