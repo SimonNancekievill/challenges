@@ -1,17 +1,24 @@
 import "./globals.css";
-import { Cherry_Bomb_One, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
+import { Cherry_Bomb_One } from "next/font/google";
+import { ModeToggle } from "@/components/ModeToggle";
 
 const cherryBomb = Cherry_Bomb_One({
   weight: "400",
   variable: "--font-cherry-bomb",
   subsets: ["latin"],
+});
+
+const areal = localFont({
+  src: "../public/font/ABCArealVariable.woff2",
+  variable: "--font-areal",
+});
+
+const arealMono = localFont({
+  src: "../public/font/ABCArealMonoVariable.woff2",
+  variable: "--font-areal-mono",
 });
 
 export default function RootLayout({
@@ -22,20 +29,26 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(cherryBomb.variable, "font-mono", jetbrainsMono.variable)}
+      className={cn(
+        areal.variable,
+        "font-areal-mono tracking-tight",
+        arealMono.variable,
+        cherryBomb.variable,
+      )}
       suppressHydrationWarning
     >
-      <body>
+      <body className="flex-col min-w-screen">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <header>
-            <h1 style={{ fontFamily: "var(--font-cherry-bomb)" }}>
+          <header className="flex justify-between mx-6 mt-2 mb-8">
+            <h1 className="text-3xl font-cherry-bomb">
               Kiki's Delivery Service
             </h1>
+            <ModeToggle />
           </header>
           {children}
         </ThemeProvider>
