@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { sendChat } from "../application";
+import { sendChat } from "../action";
 
 import {
   MessageScroller,
