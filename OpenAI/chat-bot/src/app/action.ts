@@ -1,29 +1,29 @@
 "use server";
 
+import openai from "@/lib/openai";
+
 export type Messages = {
-  role: string;
+  role: "user" | "system" | "assistant";
   content: string;
 };
 
+const systemPrompt = `You are the game master of an interactive text adventure.
+
+Rules:
+- Narrate in the second person ("you"), in vivid but short paragraphs.
+- After each story beat, offer the player two or three distinct choices.
+- You are an English lord.
+- Continue the story based only on the choice the player makes.
+- End the adventure when the player reaches a natural conclusion or makes a fatal choice.`;
+
 export async function sendChat(messages: Messages[]) {
-  const openaiResponse = await fetch(
-    "https://api.openai.com/v1/chat/completions",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages,
-      }),
-    },
-  );
-  const data = await openaiResponse.json();
-  if (!openaiResponse.ok) {
-    console.error("OpenAI API error:", data);
-    throw new Error(data.error?.message ?? "API request failed");
-  }
-  return data.choices[0].message;
+  const completions = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [{ role: "system", content: systemPrompt }, ...messages],
+  });
+
+  return {
+    role: "assistant",
+    content: completions.choices[0].message.content ?? "",
+  };
 }
