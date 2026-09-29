@@ -16,7 +16,7 @@ Rules:
 - Continue the story based only on the choice the player makes.
 - End the adventure when the player reaches a natural conclusion or makes a fatal choice.`;
 
-export async function sendChat(messages: Messages[]) {
+export async function sendChat(messages: Messages[]): Promise<Messages> {
   const completions = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [{ role: "system", content: systemPrompt }, ...messages],

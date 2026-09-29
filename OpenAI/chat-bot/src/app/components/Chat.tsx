@@ -1,20 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { sendChat } from "../action";
+import type { Messages } from "@/app/action";
 
-export default function Chat() {
-  const [messages, setMessages] = useState([]);
+type ChatProps = {
+  messages: Messages[];
+  onSubmitMessage: (content: string) => Promise<void>;
+};
+
+export default function Chat({ messages, onSubmitMessage }: ChatProps) {
   const [input, setInput] = useState("");
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    const updatedMessages = [...messages, { role: "user", content: input }];
-    setMessages(updatedMessages);
-    setInput("");
 
-    const assistantMessage = await sendChat(updatedMessages);
-    setMessages([...updatedMessages, assistantMessage]);
+    const content = input.trim();
+    if (!content) {
+      return;
+    }
+
+    setInput("");
+    await onSubmitMessage(content);
   }
 
   return (
